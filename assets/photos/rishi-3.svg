@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Photo placeholder 3</title>
+  <desc id="desc">Stylized placeholder for a happy photo of Rishi.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d9f0ed" />
+      <stop offset="100%" stop-color="#fff4de" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="56" fill="url(#bg)" />
+  <path d="M120 180c90-76 177-114 280-114 102 0 190 34 280 112v180H120Z" fill="#fff7ed" opacity="0.84" />
+  <circle cx="400" cy="330" r="120" fill="#ffcfb8" />
+  <path d="M250 520c54-76 103-110 150-110s96 34 150 110v124H250Z" fill="#ff6b35" opacity="0.82" />
+  <path d="M176 760c126-54 274-82 446-82" stroke="#0f8b8d" stroke-width="22" stroke-linecap="round" opacity="0.34" />
+  <path d="M176 826c168-30 318-30 446 0" stroke="#ff6b35" stroke-width="18" stroke-linecap="round" opacity="0.28" />
+  <text x="400" y="858" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="36" font-weight="700" fill="#1f2430">
+    Add a laughing moment
+  </text>
+  <text x="400" y="908" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="24" fill="#5f6470">
+    Perfect for a big smile shot
+  </text>
+</svg>

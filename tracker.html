@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rishi RSVP Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="tracker-page">
+    <div class="page-shell">
+      <header class="tracker-header">
+        <div>
+          <p class="eyebrow">Private view</p>
+          <h1>RSVP tracker</h1>
+          <p>
+            This page shows local demo RSVPs by default. Connect a form endpoint
+            in <code>settings.js</code> to collect real responses from GitHub
+            Pages.
+          </p>
+        </div>
+        <a class="button button-secondary" href="index.html">Back to invite</a>
+      </header>
+
+      <section class="tracker-board">
+        <div class="tracker-stats tracker-stats-large" id="tracker-stats">
+          <div>
+            <span class="stat-value" data-stat="yes">0</span>
+            <span class="stat-label">Attending</span>
+          </div>
+          <div>
+            <span class="stat-value" data-stat="maybe">0</span>
+            <span class="stat-label">Maybe</span>
+          </div>
+          <div>
+            <span class="stat-value" data-stat="no">0</span>
+            <span class="stat-label">Declined</span>
+          </div>
+          <div>
+            <span class="stat-value" data-stat="guestCount">0</span>
+            <span class="stat-label">Total guests</span>
+          </div>
+        </div>
+
+        <div class="tracker-table-wrap">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th>Guests</th>
+                <th>Message</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody id="rsvp-rows"></tbody>
+          </table>
+          <p class="empty-state" id="empty-state">
+            No RSVPs yet. Submit the invite form to populate demo data.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

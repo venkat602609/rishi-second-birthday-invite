@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Photo placeholder 2</title>
+  <desc id="desc">Stylized placeholder for a playful photo of Rishi.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3c8" />
+      <stop offset="100%" stop-color="#ffd7c8" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" rx="56" fill="url(#bg)" />
+  <rect x="90" y="120" width="620" height="540" rx="42" fill="#fff7ed" opacity="0.82" />
+  <circle cx="400" cy="350" r="128" fill="#ffcfb8" />
+  <circle cx="400" cy="310" r="54" fill="#ffd8c6" />
+  <path d="M260 525c42-64 89-94 140-94 51 0 98 30 140 94v92H260Z" fill="#0f8b8d" opacity="0.84" />
+  <circle cx="136" cy="804" r="86" fill="#0f8b8d" opacity="0.18" />
+  <circle cx="658" cy="776" r="92" fill="#ff6b35" opacity="0.18" />
+  <text x="400" y="806" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="36" font-weight="700" fill="#1f2430">
+    Add a playful candid
+  </text>
+  <text x="400" y="856" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="24" fill="#5f6470">
+    Great for a toy or outdoor moment
+  </text>
+</svg>

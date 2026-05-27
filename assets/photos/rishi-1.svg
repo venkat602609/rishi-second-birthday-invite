@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Photo placeholder 1</title>
+  <desc id="desc">Stylized placeholder for a portrait photo of Rishi.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd7c8" />
+      <stop offset="100%" stop-color="#d9f0ed" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1100" rx="56" fill="url(#bg)" />
+  <circle cx="180" cy="160" r="110" fill="#ff6b35" opacity="0.18" />
+  <circle cx="690" cy="210" r="120" fill="#0f8b8d" opacity="0.18" />
+  <circle cx="410" cy="420" r="170" fill="#fff7ed" />
+  <circle cx="410" cy="365" r="66" fill="#ffcfb8" />
+  <rect x="285" y="448" width="250" height="228" rx="120" fill="#ffcfb8" />
+  <path d="M250 748c48-70 112-106 190-106s142 36 190 106v108H250Z" fill="#fff7ed" />
+  <text x="400" y="892" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="38" font-weight="700" fill="#1f2430">
+    Add Rishi photo here
+  </text>
+  <text x="400" y="944" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="24" fill="#5f6470">
+    Replace this SVG with your favorite portrait
+  </text>
+</svg>
