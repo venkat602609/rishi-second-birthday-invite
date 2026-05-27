@@ -2492,6 +2492,14 @@ body.theme3 .button-primary {
 }
 
 @media (max-width: 640px) {
+  .party-layers {
+    transform: translateZ(0);
+  }
+
+  .scroll-effects {
+    z-index: 20;
+  }
+
   .moment-carousel::before,
   .moment-carousel::after {
     bottom: 68px;
@@ -2502,6 +2510,7 @@ body.theme3 .button-primary {
     min-height: 420px;
     margin: 0 -9px;
     padding: 24px 12vw 34px;
+    perspective: none;
     scroll-padding-inline: 12vw;
   }
 
@@ -2513,6 +2522,24 @@ body.theme3 .button-primary {
   .moment-carousel .photo-card.reveal:nth-child(2).is-visible,
   .moment-carousel .photo-card.reveal:nth-child(3).is-visible {
     flex-basis: min(76vw, 330px);
+    transform:
+      translateY(var(--moment-y, 0))
+      scale(var(--moment-scale, 0.96));
+    transform-style: flat;
+    transition:
+      opacity 260ms ease,
+      transform 260ms ease,
+      box-shadow 260ms ease,
+      filter 260ms ease;
+    will-change: auto;
+  }
+
+  .moment-carousel .photo-card.is-active-moment,
+  .moment-carousel .photo-card.reveal.is-visible.is-active-moment,
+  .moment-carousel .photo-card.reveal:nth-child(1).is-visible.is-active-moment,
+  .moment-carousel .photo-card.reveal:nth-child(2).is-visible.is-active-moment,
+  .moment-carousel .photo-card.reveal:nth-child(3).is-visible.is-active-moment {
+    transform: translateY(-10px) scale(1.02);
   }
 
   .carousel-dots {

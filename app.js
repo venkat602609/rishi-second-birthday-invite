@@ -1,6 +1,7 @@
 (function () {
   const config = window.RISHI_INVITE_CONFIG || {};
   const storageKey = config.storageKey || "rsvps";
+  const compactMotionQuery = window.matchMedia("(max-width: 720px), (pointer: coarse)");
   const galleryPhotos = [
     { file: "rishi_1.jpeg", tag: "Fresh arrival" },
     { file: "rishi_2.jpeg", tag: "Tiny burrito" },
@@ -394,6 +395,8 @@
     let activeIndex = 0;
     let rotateTimer = null;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactMotion = compactMotionQuery.matches;
+    let carouselTicking = false;
 
     dotsTarget.innerHTML = cards
       .map(
@@ -415,7 +418,8 @@
     }
 
     function hydrateNearby(index) {
-      for (let offset = -3; offset <= 4; offset += 1) {
+      const range = compactMotion ? 2 : 4;
+      for (let offset = -range; offset <= range; offset += 1) {
         hydrateImage(index + offset);
       }
     }
@@ -463,7 +467,7 @@
     }
 
     function startRotation() {
-      if (reduceMotion || rotateTimer) {
+      if (reduceMotion || compactMotion || rotateTimer) {
         return;
       }
       rotateTimer = window.setInterval(() => advance(1), 3400);
@@ -491,7 +495,7 @@
       });
     });
 
-    track.addEventListener("scroll", () => {
+    function syncActiveToScroll() {
       const trackCenter = track.getBoundingClientRect().left + track.clientWidth / 2;
       const closest = cards.reduce(
         (current, card, index) => {
@@ -502,7 +506,20 @@
         { index: activeIndex, distance: Number.POSITIVE_INFINITY }
       );
       setActive(closest.index, false);
-    });
+      carouselTicking = false;
+    }
+
+    track.addEventListener(
+      "scroll",
+      () => {
+        if (carouselTicking) {
+          return;
+        }
+        carouselTicking = true;
+        window.requestAnimationFrame(syncActiveToScroll);
+      },
+      { passive: true }
+    );
 
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
@@ -699,7 +716,11 @@
     clearEffectLayer(layer);
     const colors = getEffectPalette();
 
-    for (let index = 0; index < 18; index += 1) {
+    const compactMotion = compactMotionQuery.matches;
+    const balloonCount = compactMotion ? 10 : 18;
+    const sparkCount = compactMotion ? 3 : 5;
+
+    for (let index = 0; index < balloonCount; index += 1) {
       const x = randomBetween(4, 92);
       const popY = randomBetween(18, 56);
       const sway = randomBetween(-38, 38);
@@ -714,7 +735,7 @@
       });
       layer.appendChild(balloon);
 
-      for (let sparkIndex = 0; sparkIndex < 5; sparkIndex += 1) {
+      for (let sparkIndex = 0; sparkIndex < sparkCount; sparkIndex += 1) {
         const spark = createEffectNode("effect-piece balloon-spark", {
           "--x": `${x}vw`,
           "--y": `${popY}vh`,
@@ -734,7 +755,11 @@
     clearEffectLayer(layer);
     const colors = getEffectPalette();
 
-    for (let index = 0; index < 150; index += 1) {
+    const compactMotion = compactMotionQuery.matches;
+    const confettiCount = compactMotion ? 64 : 150;
+    const streamerCount = compactMotion ? 8 : 18;
+
+    for (let index = 0; index < confettiCount; index += 1) {
       const confetti = createEffectNode("effect-piece confetti-bit", {
         "--x": `${randomBetween(44, 56)}vw`,
         "--y": `${randomBetween(38, 52)}vh`,
@@ -749,7 +774,7 @@
       layer.appendChild(confetti);
     }
 
-    for (let index = 0; index < 18; index += 1) {
+    for (let index = 0; index < streamerCount; index += 1) {
       const streamer = createEffectNode("effect-piece streamer", {
         "--x": `${randomBetween(10, 88)}vw`,
         "--delay": `${randomBetween(0.1, 0.7)}s`,
@@ -765,7 +790,9 @@
   function popBubbles(layer) {
     clearEffectLayer(layer);
 
-    for (let index = 0; index < 40; index += 1) {
+    const bubbleCount = compactMotionQuery.matches ? 24 : 40;
+
+    for (let index = 0; index < bubbleCount; index += 1) {
       const float = randomBetween(-42, 42);
       const bubble = createEffectNode("effect-piece bubble", {
         "--x": `${randomBetween(5, 90)}vw`,
@@ -801,7 +828,8 @@
     function triggerEffect(section) {
       const now = Date.now();
       const lastFired = firedAt.get(section) || 0;
-      if (now - lastFired < 2200) {
+      const cooldown = compactMotionQuery.matches ? 4200 : 2200;
+      if (now - lastFired < cooldown) {
         return;
       }
 
