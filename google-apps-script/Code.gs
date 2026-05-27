@@ -1,6 +1,6 @@
 const SHEET_NAME = "RSVPs";
 const SPREADSHEET_ID = "";
-const SHARED_TOKEN = "";
+const TRACKER_READ_TOKEN = "";
 
 const HEADERS = [
   "submittedAt",
@@ -12,7 +12,7 @@ const HEADERS = [
 ];
 
 function doGet(e) {
-  if (!isAuthorized_(e)) {
+  if (!isTrackerAuthorized_(e)) {
     return jsonp_(e, { entries: [] });
   }
 
@@ -37,10 +37,6 @@ function doGet(e) {
 }
 
 function doPost(e) {
-  if (!isAuthorized_(e)) {
-    return json_({ ok: false, error: "Unauthorized" });
-  }
-
   const payload = parsePayload_(e);
   const entry = {
     submittedAt: payload.submittedAt || new Date().toISOString(),
@@ -100,11 +96,11 @@ function parsePayload_(e) {
   return {};
 }
 
-function isAuthorized_(e) {
-  if (!SHARED_TOKEN) {
+function isTrackerAuthorized_(e) {
+  if (!TRACKER_READ_TOKEN) {
     return true;
   }
-  return e && e.parameter && e.parameter.token === SHARED_TOKEN;
+  return e && e.parameter && e.parameter.token === TRACKER_READ_TOKEN;
 }
 
 function clean_(value) {

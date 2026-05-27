@@ -186,9 +186,10 @@
       const callbackName = `rishiRsvps${Date.now()}${Math.floor(Math.random() * 10000)}`;
       const script = document.createElement("script");
       const url = new URL(config.trackerDataUrl);
+      const trackerToken = getTrackerReadToken();
       url.searchParams.set("callback", callbackName);
-      if (config.rsvpToken) {
-        url.searchParams.set("token", config.rsvpToken);
+      if (trackerToken) {
+        url.searchParams.set("token", trackerToken);
       }
 
       const cleanup = () => {
@@ -215,6 +216,12 @@
         }
       }, 8000);
     });
+  }
+
+  function getTrackerReadToken() {
+    const queryToken = new URLSearchParams(window.location.search).get("token");
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    return hashParams.get("token") || queryToken || config.rsvpToken || "";
   }
 
   async function submitRemote(entry) {
@@ -827,10 +834,12 @@
     checkVisibleSections();
   }
 
-  loadEntries().then((entries) => {
-    updateStats(entries);
-    renderTable(entries);
-  });
+  if (document.querySelector("[data-stat]") || document.getElementById("rsvp-rows")) {
+    loadEntries().then((entries) => {
+      updateStats(entries);
+      renderTable(entries);
+    });
+  }
 
   wireForm();
   renderGalleryPhotos();
