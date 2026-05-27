@@ -1202,9 +1202,9 @@ code {
   }
 }
 
-/* Theme 1: warm sunshine invite with scroll-triggered party effects. */
+/* Wild and Wonderful: warm sunshine invite with scroll-triggered party effects. */
 body.invite-page,
-body.theme1 {
+body.wild-and-wonderful {
   --theme-bg-a: rgba(255, 179, 26, 0.28);
   --theme-bg-b: rgba(153, 234, 215, 0.32);
   --theme-bg-c: rgba(242, 64, 58, 0.14);
@@ -1220,7 +1220,7 @@ body.theme1 {
   --theme-card-tint: rgba(255, 236, 223, 0.72);
 }
 
-/* Theme 2: jewel-toned wonder palette. Switch body class back to theme1 to restore the saved theme. */
+/* Theme 2: jewel-toned wonder palette. Switch body class back to wild-and-wonderful to restore the saved theme. */
 body.theme2 {
   --theme-bg-a: rgba(69, 199, 255, 0.24);
   --theme-bg-b: rgba(181, 132, 255, 0.24);
