@@ -16,11 +16,18 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="invite-page wild-and-wonderful">
+  <body class="invite-page theme3">
     <div class="party-layers" aria-hidden="true">
       <div class="soft-glow soft-glow-one"></div>
       <div class="soft-glow soft-glow-two"></div>
       <div class="soft-glow soft-glow-three"></div>
+      <div class="animal-parade">
+        <span class="animal animal-elephant">🐘</span>
+        <span class="animal animal-giraffe">🦒</span>
+        <span class="animal animal-tiger">🐯</span>
+        <span class="animal animal-bird">🦜</span>
+      </div>
+      <div class="paw-trail"></div>
       <div class="scroll-effects" id="scroll-effects"></div>
     </div>
     <div class="page-shell">
@@ -41,9 +48,18 @@
             </p>
 
             <div class="hero-ribbons">
-              <span>cake energy</span>
-              <span>tiny sneakers</span>
-              <span>sunshine mode</span>
+              <button class="hero-ribbon hero-ribbon-cake" type="button" data-ribbon-effect="cake">
+                <span class="ribbon-icon" aria-hidden="true"></span>
+                <span>cake energy</span>
+              </button>
+              <button class="hero-ribbon hero-ribbon-sneakers" type="button" data-ribbon-effect="sneakers">
+                <span class="ribbon-icon" aria-hidden="true"></span>
+                <span>tiny sneakers</span>
+              </button>
+              <button class="hero-ribbon hero-ribbon-sunshine" type="button" data-ribbon-effect="sunshine">
+                <span class="ribbon-icon" aria-hidden="true"></span>
+                <span>sunshine mode</span>
+              </button>
             </div>
 
             <div class="hero-actions">

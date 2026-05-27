@@ -498,6 +498,143 @@
     return Math.random() * (maximum - minimum) + minimum;
   }
 
+  function wireHeroRibbonEffects() {
+    const ribbons = document.querySelectorAll("[data-ribbon-effect]");
+    if (!ribbons.length) {
+      return;
+    }
+
+    function createRibbonScene(className) {
+      const existing = document.querySelector(".ribbon-scene");
+      existing?.remove();
+      const scene = document.createElement("div");
+      scene.className = `ribbon-scene ${className}`;
+      scene.setAttribute("aria-hidden", "true");
+      document.body.appendChild(scene);
+      window.setTimeout(() => scene.remove(), 2400);
+      return scene;
+    }
+
+    function isTheme3() {
+      return document.body.classList.contains("theme3");
+    }
+
+    function playCakeScene(ribbon) {
+      const rect = ribbon.getBoundingClientRect();
+      const scene = createRibbonScene("cake-scene");
+      scene.innerHTML = `
+        <div class="cake-stage" style="--cake-x:${rect.left + rect.width / 2}px; --cake-y:${rect.top + rect.height / 2}px;">
+          <div class="cake-smoke"></div>
+          <div class="party-cake">
+            <span class="cake-flame"></span>
+            <span class="cake-candle"></span>
+            <span class="cake-top"></span>
+            <span class="cake-bottom"></span>
+          </div>
+        </div>
+      `;
+
+      if (isTheme3()) {
+        ["🐘", "🦒", "🐯"].forEach((animal, index) => {
+          const buddy = document.createElement("span");
+          buddy.className = "mini-animal";
+          buddy.textContent = animal;
+          buddy.style.setProperty("--x", `${rect.left + rect.width / 2 + (index - 1) * 74}px`);
+          buddy.style.setProperty("--y", `${rect.top + rect.height / 2 + 86}px`);
+          buddy.style.setProperty("--delay", `${index * 0.08}s`);
+          scene.appendChild(buddy);
+        });
+      }
+
+      const colors = ["#ff7da8", "#ffd166", "#7bd8c6", "#ff6a2a", "#fff7f0"];
+      for (let index = 0; index < 38; index += 1) {
+        const angle = randomBetween(-Math.PI * 0.95, -Math.PI * 0.05);
+        const distance = randomBetween(80, 230);
+        const piece = document.createElement("span");
+        piece.className = "cake-sprinkle";
+        piece.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        piece.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        piece.style.setProperty("--delay", `${randomBetween(0.38, 0.74)}s`);
+        piece.style.setProperty("--rotate", `${randomBetween(120, 700)}deg`);
+        piece.style.setProperty("--color", colors[index % colors.length]);
+        scene.appendChild(piece);
+      }
+    }
+
+    function playSneakerScene() {
+      const scene = createRibbonScene("sneaker-scene");
+      const colors = ["#4b91ff", "#ec4c9a", "#55f5cc", "#ffd21f", "#ff7a35"];
+      for (let index = 0; index < 14; index += 1) {
+        const rotation = randomBetween(-38, 38);
+        const sneaker = document.createElement("span");
+        sneaker.className = "falling-sneaker";
+        sneaker.style.setProperty("--x", `${randomBetween(6, 92)}vw`);
+        sneaker.style.setProperty("--delay", `${index * 0.08}s`);
+        sneaker.style.setProperty("--duration", `${randomBetween(1.15, 1.85)}s`);
+        sneaker.style.setProperty("--rotate", `${rotation}deg`);
+        sneaker.style.setProperty("--rotate-land", `${rotation * -0.35}deg`);
+        sneaker.style.setProperty("--rotate-exit", `${rotation * -0.2}deg`);
+        sneaker.style.setProperty("--color", colors[index % colors.length]);
+        scene.appendChild(sneaker);
+      }
+
+      if (isTheme3()) {
+        for (let index = 0; index < 22; index += 1) {
+          const paw = document.createElement("span");
+          paw.className = "falling-paw";
+          paw.style.setProperty("--x", `${randomBetween(4, 94)}vw`);
+          paw.style.setProperty("--delay", `${randomBetween(0, 1.1)}s`);
+          paw.style.setProperty("--size", `${randomBetween(18, 32)}px`);
+          scene.appendChild(paw);
+        }
+      }
+    }
+
+    function playSunshineScene(ribbon) {
+      const rect = ribbon.getBoundingClientRect();
+      const scene = createRibbonScene("sunshine-scene");
+      scene.style.setProperty("--sun-x", `${rect.left + rect.width / 2}px`);
+      scene.style.setProperty("--sun-y", `${rect.top + rect.height / 2}px`);
+      scene.innerHTML = `
+        <div class="sun-orb"></div>
+        <div class="sunbeam sunbeam-one"></div>
+        <div class="sunbeam sunbeam-two"></div>
+        <div class="sunbeam sunbeam-three"></div>
+      `;
+
+      if (isTheme3()) {
+        for (let index = 0; index < 9; index += 1) {
+          const bird = document.createElement("span");
+          bird.className = "beam-bird";
+          bird.style.setProperty("--x", `${randomBetween(-10, 80)}vw`);
+          bird.style.setProperty("--y", `${randomBetween(12, 62)}vh`);
+          bird.style.setProperty("--delay", `${index * 0.08}s`);
+          scene.appendChild(bird);
+        }
+      }
+    }
+
+    function playRibbonEffect(ribbon) {
+      const effect = ribbon.getAttribute("data-ribbon-effect");
+
+      ribbon.classList.remove("is-playing");
+      void ribbon.offsetWidth;
+      ribbon.classList.add("is-playing");
+
+      if (effect === "cake") {
+        playCakeScene(ribbon);
+      } else if (effect === "sneakers") {
+        playSneakerScene();
+      } else {
+        playSunshineScene(ribbon);
+      }
+    }
+
+    ribbons.forEach((ribbon) => {
+      ribbon.addEventListener("click", () => playRibbonEffect(ribbon));
+    });
+  }
+
   function createEffectNode(className, styles) {
     const node = document.createElement("span");
     node.className = className;
@@ -699,5 +836,6 @@
   renderGalleryPhotos();
   wireScrollReveals();
   wireMomentCarousel();
+  wireHeroRibbonEffects();
   wireScrollEffects();
 })();

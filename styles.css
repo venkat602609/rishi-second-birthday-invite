@@ -265,24 +265,374 @@ img {
   margin: 28px 0 0;
 }
 
-.hero-ribbons span {
+.hero-ribbon {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   padding: 10px 14px;
   border-radius: 999px;
   background: var(--white);
   border: 2px solid var(--ink);
   box-shadow: 5px 5px 0 var(--ink);
   transform: rotate(-3deg);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
   font-weight: 700;
+  overflow: visible;
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-.hero-ribbons span:nth-child(2) {
+.hero-ribbon:hover,
+.hero-ribbon:focus-visible {
+  box-shadow: 7px 7px 0 var(--ink);
+  transform: translateY(-2px) rotate(-2deg);
+}
+
+.hero-ribbon:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--theme-accent) 62%, white);
+  outline-offset: 4px;
+}
+
+.hero-ribbon:nth-child(2) {
   transform: rotate(2deg);
 }
 
-.hero-ribbons span:nth-child(3) {
+.hero-ribbon:nth-child(3) {
   transform: rotate(-1deg);
+}
+
+.hero-ribbon.is-playing {
+  animation: ribbon-pop 560ms cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.ribbon-icon {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+}
+
+.hero-ribbon-cake .ribbon-icon {
+  border-radius: 7px 7px 9px 9px;
+  background:
+    linear-gradient(90deg, #ff7da8 0 18%, transparent 18% 32%, #7bd8c6 32% 48%, transparent 48% 64%, #ffcf56 64% 82%, transparent 82%),
+    linear-gradient(180deg, #fff7f0 0 34%, #ff8a98 34% 58%, #ffd166 58%);
+  box-shadow: inset 0 -2px 0 rgba(21, 21, 21, 0.12);
+}
+
+.hero-ribbon-cake .ribbon-icon::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: -9px;
+  width: 6px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ff6a2a;
+  box-shadow: 0 -4px 0 -1px #ffd21f;
+}
+
+.hero-ribbon-sneakers .ribbon-icon::before,
+.hero-ribbon-sneakers .ribbon-icon::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  width: 17px;
+  height: 9px;
+  border-radius: 10px 10px 6px 6px;
+  background: var(--theme-blue);
+  box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.72);
+}
+
+.hero-ribbon-sneakers .ribbon-icon::before {
+  left: 0;
+  transform: rotate(-10deg);
+}
+
+.hero-ribbon-sneakers .ribbon-icon::after {
+  right: 0;
+  background: var(--theme-primary);
+  transform: rotate(10deg);
+}
+
+.hero-ribbon-sunshine .ribbon-icon {
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff8d6 0 34%, var(--theme-accent) 36% 64%, transparent 66%);
+  animation: sun-idle 4s linear infinite;
+}
+
+.hero-ribbon-sunshine .ribbon-icon::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background: conic-gradient(
+    from 8deg,
+    var(--theme-accent) 0 8deg,
+    transparent 8deg 25deg,
+    var(--theme-accent) 25deg 33deg,
+    transparent 33deg 51deg,
+    var(--theme-accent) 51deg 60deg,
+    transparent 60deg 82deg,
+    var(--theme-accent) 82deg 92deg,
+    transparent 92deg 360deg
+  );
+  z-index: -1;
+  transform: scale(1.45);
+}
+
+.ribbon-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cake-stage {
+  position: absolute;
+  left: var(--cake-x);
+  top: var(--cake-y);
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  animation: cake-stage-pop 1.7s ease forwards;
+}
+
+.party-cake {
+  position: absolute;
+  left: 35px;
+  top: 46px;
+  width: 80px;
+  height: 70px;
+}
+
+.cake-top,
+.cake-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border: 2px solid rgba(21, 21, 21, 0.18);
+}
+
+.cake-top {
+  top: 22px;
+  height: 28px;
+  border-radius: 14px 14px 8px 8px;
+  background:
+    radial-gradient(circle at 20% 35%, #ff7da8 0 4px, transparent 5px),
+    radial-gradient(circle at 52% 28%, #7bd8c6 0 4px, transparent 5px),
+    radial-gradient(circle at 78% 42%, #ffd166 0 4px, transparent 5px),
+    #fff7f0;
+}
+
+.cake-bottom {
+  top: 48px;
+  height: 34px;
+  border-radius: 6px 6px 16px 16px;
+  background: linear-gradient(90deg, #ff8a98 0 50%, #ffd166 50%);
+}
+
+.cake-candle {
+  position: absolute;
+  left: 36px;
+  top: 0;
+  width: 9px;
+  height: 24px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(180deg, #4b91ff 0 5px, #fff 5px 10px);
+}
+
+.cake-flame {
+  position: absolute;
+  left: 34px;
+  top: -13px;
+  width: 13px;
+  height: 18px;
+  border-radius: 999px 999px 999px 0;
+  background: radial-gradient(circle at 55% 70%, #fff7a8 0 25%, #ffd21f 26% 54%, #ff6a2a 55%);
+  transform: rotate(-34deg);
+  animation: candle-blow 1.2s ease forwards;
+}
+
+.cake-smoke {
+  position: absolute;
+  left: 70px;
+  top: 26px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    22px -8px 0 3px rgba(255, 255, 255, 0.52),
+    44px -18px 0 7px rgba(255, 255, 255, 0.34);
+  opacity: 0;
+  animation: cake-smoke 1.3s ease 0.45s forwards;
+}
+
+.cake-sprinkle {
+  position: absolute;
+  left: var(--cake-x);
+  top: var(--cake-y);
+  width: 9px;
+  height: 15px;
+  border-radius: 3px;
+  background: var(--color);
+  animation: cake-blast 1.15s cubic-bezier(0.12, 0.78, 0.16, 1) var(--delay) forwards;
+}
+
+.falling-sneaker {
+  position: absolute;
+  left: var(--x);
+  top: -80px;
+  width: 62px;
+  height: 34px;
+  border-radius: 18px 18px 9px 9px;
+  background:
+    linear-gradient(180deg, transparent 0 46%, rgba(255, 255, 255, 0.85) 47% 60%, transparent 61%),
+    var(--color);
+  box-shadow:
+    inset 0 -8px 0 rgba(255, 255, 255, 0.78),
+    0 16px 28px rgba(21, 21, 21, 0.12);
+  transform: rotate(var(--rotate));
+  animation: sneaker-drop var(--duration) cubic-bezier(0.16, 0.82, 0.24, 1) var(--delay) forwards;
+}
+
+.falling-sneaker::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: -9px;
+  width: 30px;
+  height: 22px;
+  border-radius: 14px 14px 2px 2px;
+  background: var(--color);
+}
+
+.falling-sneaker::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -6px;
+  height: 8px;
+  border-radius: 999px;
+  background: #fffdf8;
+  border: 1px solid rgba(21, 21, 21, 0.12);
+}
+
+.sun-orb {
+  position: absolute;
+  left: var(--sun-x);
+  top: var(--sun-y);
+  width: 118px;
+  height: 118px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff8d6 0 26%, #ffd21f 27% 68%, #ff9f1a 69%);
+  box-shadow:
+    0 0 0 26px rgba(255, 210, 31, 0.18),
+    0 0 90px rgba(255, 179, 26, 0.5);
+  transform: translate(-50%, -50%) scale(0.15);
+  animation: sun-orb-beam 1.7s ease forwards;
+}
+
+.sunbeam {
+  position: absolute;
+  left: var(--sun-x);
+  top: var(--sun-y);
+  width: 170vw;
+  height: 80px;
+  transform-origin: left center;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 210, 31, 0.7), rgba(255, 210, 31, 0));
+  opacity: 0;
+  mix-blend-mode: multiply;
+  animation: sunbeam-sweep 1.55s ease forwards;
+}
+
+.sunbeam-one {
+  rotate: -18deg;
+}
+
+.sunbeam-two {
+  rotate: 8deg;
+  animation-delay: 0.08s;
+}
+
+.sunbeam-three {
+  rotate: 34deg;
+  animation-delay: 0.16s;
+}
+
+.mini-animal {
+  position: fixed;
+  left: var(--x);
+  top: var(--y);
+  font-size: 3.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 10px 12px rgba(30, 36, 21, 0.18));
+  transform: translate(-50%, 20px) scale(0.45);
+  opacity: 0;
+  animation: mini-animal-cheer 1.45s ease var(--delay) forwards;
+}
+
+.mini-animal::before,
+.mini-animal::after {
+  display: none;
+}
+
+.falling-paw {
+  position: absolute;
+  left: var(--x);
+  top: -42px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  background: rgba(30, 36, 21, 0.58);
+  box-shadow:
+    -10px -9px 0 -5px rgba(30, 36, 21, 0.58),
+    0 -13px 0 -5px rgba(30, 36, 21, 0.58),
+    10px -9px 0 -5px rgba(30, 36, 21, 0.58);
+  animation: paw-rain 1.65s ease var(--delay) forwards;
+}
+
+.beam-bird {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 34px;
+  height: 14px;
+  border-radius: 999px;
+  background: #2f7dbd;
+  opacity: 0;
+  animation: beam-bird-flight 1.45s ease var(--delay) forwards;
+}
+
+.beam-bird::before,
+.beam-bird::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 20px;
+  height: 14px;
+  border-radius: 999px 999px 0 999px;
+  background: #1e9f72;
+}
+
+.beam-bird::before {
+  left: 2px;
+  transform-origin: right bottom;
+  animation: bird-flap 420ms ease-in-out infinite;
+}
+
+.beam-bird::after {
+  right: 2px;
+  transform: scaleX(-1);
+  transform-origin: left bottom;
+  animation: bird-flap 420ms ease-in-out infinite reverse;
 }
 
 .hero-actions {
@@ -983,6 +1333,232 @@ code {
   }
 }
 
+@keyframes animal-parade {
+  0% {
+    transform: translateX(-12vw) translateY(0) scale(0.9);
+  }
+
+  50% {
+    transform: translateX(58vw) translateY(-5px) scale(1);
+  }
+
+  100% {
+    transform: translateX(118vw) translateY(0) scale(0.9);
+  }
+}
+
+@keyframes bird-flap {
+  0%,
+  100% {
+    rotate: -18deg;
+  }
+
+  50% {
+    rotate: 24deg;
+  }
+}
+
+@keyframes paw-drift {
+  to {
+    background-position: 188px 194px, 178px 182px, 198px 180px, 188px 172px;
+  }
+}
+
+@keyframes mini-animal-cheer {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 22px) scale(0.45) rotate(-8deg);
+  }
+
+  18%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -28px) scale(0.82) rotate(8deg);
+  }
+}
+
+@keyframes paw-rain {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) rotate(-12deg) scale(0.6);
+  }
+
+  18%,
+  70% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(78vh) rotate(24deg) scale(1);
+  }
+}
+
+@keyframes beam-bird-flight {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) translateY(18px) scale(0.7);
+  }
+
+  18%,
+  76% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(34vw) translateY(-22px) scale(1.05);
+  }
+}
+
+@keyframes ribbon-pop {
+  0%,
+  100% {
+    scale: 1;
+  }
+
+  42% {
+    scale: 1.12;
+  }
+}
+
+@keyframes cake-stage-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.55) rotate(-8deg);
+  }
+
+  18%,
+  74% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -70%) scale(0.86) rotate(5deg);
+  }
+}
+
+@keyframes candle-blow {
+  0%,
+  35% {
+    opacity: 1;
+    transform: rotate(-34deg) scale(1);
+    filter: blur(0);
+  }
+
+  62% {
+    opacity: 0.65;
+    transform: translateX(24px) rotate(42deg) scale(0.7);
+    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(48px) translateY(-8px) rotate(60deg) scale(0.2);
+    filter: blur(5px);
+  }
+}
+
+@keyframes cake-smoke {
+  0% {
+    opacity: 0;
+    transform: translateX(0) scale(0.4);
+  }
+
+  32% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(74px) translateY(-28px) scale(1.6);
+  }
+}
+
+@keyframes cake-blast {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.4);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rotate)) scale(1.1);
+  }
+}
+
+@keyframes sneaker-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) rotate(var(--rotate)) scale(0.8);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  74% {
+    opacity: 1;
+    transform: translateY(72vh) rotate(var(--rotate-land)) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(83vh) rotate(var(--rotate-exit)) scale(0.88);
+  }
+}
+
+@keyframes sun-orb-beam {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15);
+  }
+
+  22%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
+
+@keyframes sunbeam-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px) scaleX(0);
+  }
+
+  26% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-20px) scaleX(1);
+  }
+}
+
+@keyframes sun-idle {
+  to {
+    rotate: 360deg;
+  }
+}
+
 @keyframes moment-glow {
   0% {
     filter: saturate(1);
@@ -1240,12 +1816,42 @@ body.theme2 {
   --teal: #386a84;
 }
 
+/* Theme 3: Wild Safari Wonder, animal-themed and high-energy. */
+body.theme3 {
+  --theme-bg-a: rgba(116, 214, 137, 0.38);
+  --theme-bg-b: rgba(255, 207, 86, 0.32);
+  --theme-bg-c: rgba(255, 122, 53, 0.2);
+  --theme-page-start: #f4ffd9;
+  --theme-page-mid: #e8f8c8;
+  --theme-page-end: #ffe4b8;
+  --theme-primary: #ef5a24;
+  --theme-secondary: #1e9f72;
+  --theme-accent: #ffcf56;
+  --theme-aqua: #74d689;
+  --theme-blue: #2f7dbd;
+  --theme-pink: #ff8aa6;
+  --theme-card-tint: rgba(255, 239, 190, 0.82);
+  --ink: #1e2415;
+  --muted: #5d6146;
+  --teal: #1a7f63;
+}
+
 body.invite-page {
   background:
     radial-gradient(circle at 12% 18%, var(--theme-bg-a), transparent 18%),
     radial-gradient(circle at 86% 16%, var(--theme-bg-b), transparent 17%),
     radial-gradient(circle at 70% 74%, var(--theme-bg-c), transparent 18%),
     linear-gradient(180deg, var(--theme-page-start) 0%, var(--theme-page-mid) 56%, var(--theme-page-end) 100%);
+}
+
+body.theme3.invite-page {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255, 207, 86, 0.34), transparent 18%),
+    radial-gradient(circle at 82% 18%, rgba(116, 214, 137, 0.34), transparent 18%),
+    radial-gradient(circle at 76% 72%, rgba(239, 90, 36, 0.18), transparent 17%),
+    linear-gradient(90deg, rgba(30, 36, 21, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #f4ffd9 0%, #e8f8c8 48%, #ffe4b8 100%);
+  background-size: auto, auto, auto, 46px 46px, auto;
 }
 
 .soft-glow {
@@ -1290,6 +1896,75 @@ body.invite-page {
   overflow: hidden;
 }
 
+.animal-parade,
+.paw-trail {
+  display: none;
+}
+
+body.theme3 .animal-parade {
+  position: fixed;
+  inset: auto 0 3vh;
+  z-index: 2;
+  display: block;
+  height: 150px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.theme3 .animal {
+  position: absolute;
+  bottom: 0;
+  left: -170px;
+  display: block;
+  font-size: 4.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 16px 18px rgba(30, 36, 21, 0.16));
+  animation: animal-parade 18s linear infinite;
+}
+
+body.theme3 .animal::before,
+body.theme3 .animal::after {
+  display: none;
+}
+
+body.theme3 .animal-elephant {
+  animation-delay: 0s;
+}
+
+body.theme3 .animal-giraffe {
+  bottom: 2px;
+  font-size: 5.3rem;
+  animation-delay: -5s;
+}
+
+body.theme3 .animal-tiger {
+  font-size: 4.9rem;
+  animation-delay: -10s;
+}
+
+body.theme3 .animal-bird {
+  bottom: 54px;
+  font-size: 4rem;
+  animation-delay: -14s;
+}
+
+body.theme3 .paw-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle, #1e2415 0 4px, transparent 5px),
+    radial-gradient(circle, #1e2415 0 2px, transparent 3px),
+    radial-gradient(circle, #1e2415 0 2px, transparent 3px),
+    radial-gradient(circle, #1e2415 0 2px, transparent 3px);
+  background-size: 170px 170px;
+  background-position: 18px 24px, 8px 12px, 28px 10px, 18px 2px;
+  animation: paw-drift 18s linear infinite;
+}
+
 .effect-piece {
   position: absolute;
   display: block;
@@ -1299,7 +1974,7 @@ body.invite-page {
 
 .brand,
 .tracker-link,
-.hero-ribbons span,
+.hero-ribbon,
 .button,
 .tracker-stats > div {
   border: 1px solid rgba(21, 21, 21, 0.08);
@@ -1315,6 +1990,37 @@ body.invite-page {
 .photo-card {
   border: 1px solid rgba(255, 255, 255, 0.72);
   box-shadow: var(--shadow);
+}
+
+body.theme3 .hero-ribbon,
+body.theme3 .button,
+body.theme3 .brand,
+body.theme3 .tracker-link,
+body.theme3 .tracker-stats > div {
+  border-color: rgba(30, 36, 21, 0.12);
+  box-shadow: 0 16px 0 rgba(30, 36, 21, 0.08), 0 24px 54px rgba(84, 96, 28, 0.16);
+}
+
+body.theme3 .hero-card,
+body.theme3 .detail-panel,
+body.theme3 .rsvp-form,
+body.theme3 .tracker-preview,
+body.theme3 .tracker-board,
+body.theme3 .tracker-header,
+body.theme3 .photo-card {
+  border-color: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 28px 86px rgba(84, 96, 28, 0.18);
+}
+
+body.theme3 .hero-card {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255, 207, 86, 0.36), transparent 20%),
+    radial-gradient(circle at 88% 12%, rgba(116, 214, 137, 0.3), transparent 20%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(255, 239, 190, 0.82));
+}
+
+body.theme3 .button-primary {
+  background: linear-gradient(135deg, #ef5a24, #1e9f72);
 }
 
 .hero {
