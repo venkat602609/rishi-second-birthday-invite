@@ -256,12 +256,17 @@
   function wireForm() {
     const form = document.getElementById("rsvp-form");
     const statusNode = document.getElementById("form-status");
+    const submitButton = form?.querySelector('button[type="submit"]');
+    const submitLabel = submitButton?.querySelector(".button-label");
     if (!form || !statusNode) {
       return;
     }
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (form.classList.contains("is-submitting")) {
+        return;
+      }
       const formData = new FormData(form);
       const entry = {
         name: String(formData.get("name") || "").trim(),
@@ -272,7 +277,15 @@
         submittedAt: new Date().toISOString()
       };
 
-      statusNode.textContent = "Submitting RSVP...";
+      form.classList.add("is-submitting");
+      form.setAttribute("aria-busy", "true");
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+      if (submitLabel) {
+        submitLabel.textContent = "Saving RSVP";
+      }
+      statusNode.textContent = "Saving your RSVP. Please keep this page open.";
 
       try {
         if (config.submitMode === "remote" && config.rsvpPostUrl) {
@@ -283,9 +296,11 @@
           writeLocalRsvps(entries);
         }
 
-        const entries = await loadEntries();
-        updateStats(entries);
-        renderTable(entries);
+        if (document.querySelector("[data-stat]") || document.getElementById("rsvp-rows")) {
+          const entries = await loadEntries();
+          updateStats(entries);
+          renderTable(entries);
+        }
         form.reset();
         form.querySelector('input[name="guests"]').value = "1";
         statusNode.textContent =
@@ -294,6 +309,15 @@
             : "RSVP saved in local demo mode. Connect a real endpoint in settings.js for live tracking.";
       } catch (error) {
         statusNode.textContent = "There was a problem sending the RSVP.";
+      } finally {
+        form.classList.remove("is-submitting");
+        form.removeAttribute("aria-busy");
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
+        if (submitLabel) {
+          submitLabel.textContent = "Send RSVP";
+        }
       }
     });
   }

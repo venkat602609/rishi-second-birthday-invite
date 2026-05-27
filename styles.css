@@ -646,6 +646,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   min-height: 50px;
   padding: 0 22px;
   border-radius: 999px;
@@ -662,6 +663,27 @@ img {
 .button:hover {
   transform: translate(-2px, -2px);
   box-shadow: 9px 9px 0 var(--ink);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: wait;
+  opacity: 0.82;
+  transform: none;
+}
+
+.button-spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.48);
+  border-top-color: currentColor;
+  border-radius: 999px;
+  animation: rsvp-spin 780ms linear infinite;
+}
+
+.is-submitting .button-spinner {
+  display: inline-block;
 }
 
 .button-primary {
@@ -932,6 +954,11 @@ main section {
   transform: translateY(-1px);
 }
 
+.button:disabled:hover {
+  transform: none;
+  box-shadow: 0 16px 0 rgba(30, 36, 21, 0.08), 0 24px 54px rgba(84, 96, 28, 0.16);
+}
+
 .spectacle {
   min-height: 165vh;
   padding: 0;
@@ -1175,6 +1202,21 @@ main section {
   margin: 0;
   min-height: 1.5em;
   color: var(--teal);
+  font-weight: 700;
+}
+
+.rsvp-form.is-submitting {
+  position: relative;
+}
+
+.rsvp-form.is-submitting input,
+.rsvp-form.is-submitting select,
+.rsvp-form.is-submitting textarea {
+  pointer-events: none;
+}
+
+.rsvp-form.is-submitting .form-status {
+  color: var(--theme-primary);
 }
 
 .tracker-preview {
@@ -1429,6 +1471,12 @@ code {
 
   42% {
     scale: 1.12;
+  }
+}
+
+@keyframes rsvp-spin {
+  to {
+    rotate: 360deg;
   }
 }
 
