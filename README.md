@@ -46,6 +46,40 @@ Recommended backend options for GitHub Pages:
 - Formspree
 - Supabase edge function + table
 
+### Google Apps Script + Google Sheets setup
+
+This keeps the custom RSVP form and stores responses in a Google Sheet.
+
+1. Create a new Google Sheet, for example `Rishi Birthday RSVPs`.
+2. In the Sheet, open `Extensions` -> `Apps Script`.
+3. Replace the default Apps Script code with the contents of
+   `google-apps-script/Code.gs` from this repo.
+4. Optional but recommended: set `SHARED_TOKEN` in `Code.gs` to a private random
+   value, such as `rishi-party-2026`.
+5. Click `Deploy` -> `New deployment`.
+6. Select type `Web app`.
+7. Set `Execute as` to `Me`.
+8. Set `Who has access` to `Anyone`.
+9. Click `Deploy`, approve permissions, and copy the web app URL ending in
+   `/exec`.
+10. Update `settings.js`:
+
+```js
+window.RISHI_INVITE_CONFIG = {
+  storageKey: "rishi-birthday-rsvps-v2",
+  rsvpPostUrl: "YOUR_WEB_APP_EXEC_URL",
+  trackerDataUrl: "YOUR_WEB_APP_EXEC_URL",
+  submitMode: "remote",
+  remoteProvider: "googleAppsScript",
+  rsvpToken: "MATCH_THE_SHARED_TOKEN_OR_LEAVE_EMPTY"
+};
+```
+
+11. Commit and push the updated `settings.js`.
+12. Submit one test RSVP from the published invite.
+13. Open the Google Sheet and confirm a row appears in the `RSVPs` tab.
+14. Open `tracker.html` on the published site and confirm the response appears.
+
 ## GitHub Pages deployment
 
 1. Push this repository to GitHub.

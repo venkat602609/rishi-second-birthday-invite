@@ -556,9 +556,18 @@ main section {
   gap: 9px;
 }
 
+.carousel-count {
+  min-width: 58px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .carousel-dot {
-  width: 10px;
-  height: 10px;
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
   padding: 0;
   border: 0;
   border-radius: 999px;
@@ -568,7 +577,7 @@ main section {
 }
 
 .carousel-dot.is-active {
-  width: 28px;
+  width: 22px;
   background: var(--theme-secondary);
   transform: translateY(-1px);
 }
@@ -1713,7 +1722,7 @@ body.invite-page {
 }
 
 .carousel-dots {
-  max-width: min(460px, 48vw);
+  max-width: min(330px, 36vw);
   overflow-x: auto;
   padding: 6px 2px;
   scrollbar-width: none;
@@ -1748,6 +1757,6 @@ body.invite-page {
   }
 
   .carousel-dots {
-    max-width: 36vw;
+    max-width: 28vw;
   }
 }

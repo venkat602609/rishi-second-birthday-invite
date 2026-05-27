@@ -1,7 +1,64 @@
 (function () {
   const config = window.RISHI_INVITE_CONFIG || {};
   const storageKey = config.storageKey || "rsvps";
-
+  const galleryPhotos = [
+    { file: "rishi_1.jpeg", tag: "Fresh arrival" },
+    { file: "rishi_2.jpeg", tag: "Tiny burrito" },
+    { file: "rishi_3.jpeg", tag: "Cozy nap" },
+    { file: "rishi_4.jpeg", tag: "Dad cuddles" },
+    { file: "rishi_5.jpeg", tag: "Sleepy star" },
+    { file: "rishi_6.jpeg", tag: "Curious eyes" },
+    { file: "rishi_7.jpeg", tag: "Mom's arms" },
+    { file: "rishi_8.jpeg", tag: "First giggles" },
+    { file: "rishi_9.jpeg", tag: "Big surprise" },
+    { file: "rishi_10.jpeg", tag: "Little grin" },
+    { file: "rishi_11.jpeg", tag: "Mommy moment" },
+    { file: "rishi_12.jpeg", tag: "Happy baby" },
+    { file: "rishi_13.jpeg", tag: "Peekaboo bundle" },
+    { file: "rishi_14.jpeg", tag: "Cheeky smile" },
+    { file: "rishi_15.jpeg", tag: "Bow-tie charm" },
+    { file: "rishi_16.jpeg", tag: "Stretch break" },
+    { file: "rishi_17.jpeg", tag: "Cake candles" },
+    { file: "rishi_18.jpeg", tag: "Wide-eyed wonder" },
+    { file: "rishi_19.jpeg", tag: "Stroller peek" },
+    { file: "rishi_20.jpeg", tag: "Tummy time" },
+    { file: "rishi_21.jpeg", tag: "Thoughtful gaze" },
+    { file: "rishi_22.jpeg", tag: "Suspenders style" },
+    { file: "rishi_23.jpeg", tag: "Temple visit" },
+    { file: "rishi_24.jpeg", tag: "Autumn walk" },
+    { file: "rishi_25.jpeg", tag: "Hair spike" },
+    { file: "rishi_26.jpeg", tag: "Sofa explorer" },
+    { file: "rishi_27.jpeg", tag: "Blessing day" },
+    { file: "rishi_28.jpeg", tag: "Lounging look" },
+    { file: "rishi_29.jpeg", tag: "Birthday candles" },
+    { file: "rishi_30.jpeg", tag: "Car-seat joy" },
+    { file: "rishi_31.jpeg", tag: "Cozy cub" },
+    { file: "rishi_32.jpeg", tag: "Festive hugs" },
+    { file: "rishi_33.jpeg", tag: "Red kurta" },
+    { file: "rishi_34.jpeg", tag: "Blue shirt" },
+    { file: "rishi_35.jpeg", tag: "Pool smiles" },
+    { file: "rishi_36.jpeg", tag: "Golden hour" },
+    { file: "rishi_37.jpeg", tag: "Sunset lift" },
+    { file: "rishi_38.jpeg", tag: "Cafe cutie" },
+    { file: "rishi_39.jpeg", tag: "High-chair lean" },
+    { file: "rishi_40.jpeg", tag: "Skyline play" },
+    { file: "rishi_41.jpeg", tag: "Explorer hat" },
+    { file: "rishi_42.jpeg", tag: "Creek explorer" },
+    { file: "rishi_43.jpeg", tag: "Cabinet adventure" },
+    { file: "rishi_44.jpeg", tag: "Petting zoo" },
+    { file: "rishi_45.jpeg", tag: "Little gentleman" },
+    { file: "rishi_46.jpeg", tag: "Astronaut night" },
+    { file: "rishi_47.jpeg", tag: "Mountain view" },
+    { file: "rishi_48.jpeg", tag: "Bedtime bounce" },
+    { file: "rishi_49.jpeg", tag: "Cave crew" },
+    { file: "rishi_50.jpeg", tag: "Castle smiles" },
+    { file: "rishi_51.jpeg", tag: "School bag" },
+    { file: "rishi_52.jpeg", tag: "Party snack" },
+    { file: "rishi_53.jpeg", tag: "Cool shades" },
+    { file: "rishi_54.jpeg", tag: "Suit up" },
+    { file: "rishi_55.jpeg", tag: "Yosemite stop" },
+    { file: "rishi_56.jpeg", tag: "Lamp helper" }
+  ];
   function readLocalRsvps() {
     try {
       const raw = window.localStorage.getItem(storageKey);
@@ -103,6 +160,14 @@
   }
 
   async function loadEntries() {
+    if (
+      config.submitMode === "remote" &&
+      config.remoteProvider === "googleAppsScript" &&
+      config.trackerDataUrl
+    ) {
+      return loadGoogleAppsScriptEntries();
+    }
+
     if (config.submitMode === "remote" && config.trackerDataUrl) {
       try {
         const response = await fetch(config.trackerDataUrl, { cache: "no-store" });
@@ -116,7 +181,58 @@
     return readLocalRsvps();
   }
 
+  function loadGoogleAppsScriptEntries() {
+    return new Promise((resolve) => {
+      const callbackName = `rishiRsvps${Date.now()}${Math.floor(Math.random() * 10000)}`;
+      const script = document.createElement("script");
+      const url = new URL(config.trackerDataUrl);
+      url.searchParams.set("callback", callbackName);
+      if (config.rsvpToken) {
+        url.searchParams.set("token", config.rsvpToken);
+      }
+
+      const cleanup = () => {
+        delete window[callbackName];
+        script.remove();
+      };
+
+      window[callbackName] = (payload) => {
+        cleanup();
+        resolve(Array.isArray(payload) ? payload : payload.entries || []);
+      };
+
+      script.onerror = () => {
+        cleanup();
+        resolve(readLocalRsvps());
+      };
+
+      script.src = url.toString();
+      document.head.appendChild(script);
+      window.setTimeout(() => {
+        if (window[callbackName]) {
+          cleanup();
+          resolve(readLocalRsvps());
+        }
+      }, 8000);
+    });
+  }
+
   async function submitRemote(entry) {
+    if (config.remoteProvider === "googleAppsScript") {
+      const formData = new FormData();
+      formData.append("payload", JSON.stringify(entry));
+      if (config.rsvpToken) {
+        formData.append("token", config.rsvpToken);
+      }
+
+      await fetch(config.rsvpPostUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      });
+      return;
+    }
+
     const response = await fetch(config.rsvpPostUrl, {
       method: "POST",
       headers: {
@@ -201,6 +317,33 @@
     targets.forEach((target) => observer.observe(target));
   }
 
+  function renderGalleryPhotos() {
+    const track = document.querySelector("[data-carousel-track]");
+    if (!track || !galleryPhotos.length) {
+      return;
+    }
+
+    track.innerHTML = galleryPhotos
+      .map((photo, index) => {
+        const src = `assets/gallery/${photo.file}`;
+        const eagerAttributes =
+          index < 4
+            ? `src="${src}" loading="${index === 0 ? "eager" : "lazy"}" fetchpriority="${index === 0 ? "high" : "auto"}"`
+            : `data-src="${src}" loading="lazy"`;
+        return `
+          <figure class="photo-card">
+            <img
+              ${eagerAttributes}
+              decoding="async"
+              alt="${escapeHtml(photo.tag)}"
+            />
+            <figcaption>${escapeHtml(photo.tag)}</figcaption>
+          </figure>
+        `;
+      })
+      .join("");
+  }
+
   function wireMomentCarousel() {
     const carousel = document.querySelector("[data-carousel]");
     if (!carousel) {
@@ -212,6 +355,7 @@
     const previousButton = carousel.querySelector("[data-carousel-prev]");
     const nextButton = carousel.querySelector("[data-carousel-next]");
     const dotsTarget = carousel.querySelector("[data-carousel-dots]");
+    const countTarget = carousel.querySelector("[data-carousel-count]");
     if (!track || cards.length < 2 || !dotsTarget) {
       return;
     }
@@ -229,8 +373,25 @@
 
     const dots = Array.from(dotsTarget.querySelectorAll("[data-carousel-dot]"));
 
+    function hydrateImage(index) {
+      const card = cards[(index + cards.length) % cards.length];
+      const image = card?.querySelector("img[data-src]");
+      if (!image) {
+        return;
+      }
+      image.src = image.getAttribute("data-src");
+      image.removeAttribute("data-src");
+    }
+
+    function hydrateNearby(index) {
+      for (let offset = -3; offset <= 4; offset += 1) {
+        hydrateImage(index + offset);
+      }
+    }
+
     function setActive(index, shouldScroll) {
       activeIndex = (index + cards.length) % cards.length;
+      hydrateNearby(activeIndex);
       cards.forEach((card, cardIndex) => {
         let offset = cardIndex - activeIndex;
         if (offset > cards.length / 2) {
@@ -253,6 +414,9 @@
         dot.classList.toggle("is-active", dotIndex === activeIndex);
         dot.setAttribute("aria-current", dotIndex === activeIndex ? "true" : "false");
       });
+      if (countTarget) {
+        countTarget.textContent = `${activeIndex + 1} / ${cards.length}`;
+      }
 
       if (shouldScroll) {
         cards[activeIndex].scrollIntoView({
@@ -532,6 +696,7 @@
   });
 
   wireForm();
+  renderGalleryPhotos();
   wireScrollReveals();
   wireMomentCarousel();
   wireScrollEffects();
