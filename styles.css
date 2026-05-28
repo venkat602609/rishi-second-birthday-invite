@@ -2512,6 +2512,8 @@ body.theme3 .button-primary {
     padding: 24px 12vw 34px;
     perspective: none;
     scroll-padding-inline: 12vw;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
   }
 
   .moment-carousel .photo-card,
@@ -2531,6 +2533,7 @@ body.theme3 .button-primary {
       transform 260ms ease,
       box-shadow 260ms ease,
       filter 260ms ease;
+    contain: layout paint;
     will-change: auto;
   }
 

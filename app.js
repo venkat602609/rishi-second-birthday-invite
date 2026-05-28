@@ -358,8 +358,9 @@
     track.innerHTML = galleryPhotos
       .map((photo, index) => {
         const src = `assets/gallery/${photo.file}`;
-        const eagerAttributes =
-          index < 4
+        const eagerAttributes = compactMotionQuery.matches
+          ? `src="${src}" loading="${index === 0 ? "eager" : "lazy"}" fetchpriority="${index === 0 ? "high" : "auto"}"`
+          : index < 4
             ? `src="${src}" loading="${index === 0 ? "eager" : "lazy"}" fetchpriority="${index === 0 ? "high" : "auto"}"`
             : `data-src="${src}" loading="lazy"`;
         return `
@@ -428,6 +429,17 @@
       activeIndex = (index + cards.length) % cards.length;
       hydrateNearby(activeIndex);
       cards.forEach((card, cardIndex) => {
+        if (compactMotion) {
+          card.style.setProperty("--moment-x", "0px");
+          card.style.setProperty("--moment-y", cardIndex === activeIndex ? "-10px" : "0px");
+          card.style.setProperty("--moment-rotate-y", "0deg");
+          card.style.setProperty("--moment-rotate-z", "0deg");
+          card.style.setProperty("--moment-scale", cardIndex === activeIndex ? "1.02" : "0.96");
+          card.style.setProperty("--moment-opacity", cardIndex === activeIndex ? "1" : "0.9");
+          card.classList.toggle("is-active-moment", cardIndex === activeIndex);
+          return;
+        }
+
         let offset = cardIndex - activeIndex;
         if (offset > cards.length / 2) {
           offset -= cards.length;
@@ -455,7 +467,7 @@
 
       if (shouldScroll) {
         cards[activeIndex].scrollIntoView({
-          behavior: reduceMotion ? "auto" : "smooth",
+          behavior: reduceMotion || compactMotion ? "auto" : "smooth",
           block: "nearest",
           inline: "center"
         });
