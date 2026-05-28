@@ -2,6 +2,7 @@
   "name": "rishi-second-birthday",
   "private": true,
   "scripts": {
+    "build:cloudflare": "rm -rf dist && mkdir -p dist && cp -R index.html tracker.html app.js styles.css settings.js assets dist/ && find dist -name .DS_Store -delete",
     "start": "python3 -m http.server 8000"
   }
 }
