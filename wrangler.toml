@@ -1,0 +1,6 @@
+name = "rishi-second-birthday-invite"
+compatibility_date = "2026-05-28"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
