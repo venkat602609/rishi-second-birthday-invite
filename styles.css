@@ -699,6 +699,8 @@ img {
 .hero-card,
 .detail-panel,
 .rsvp-form,
+.archive-card,
+.archive-thanks-panel,
 .tracker-preview,
 .tracker-board,
 .tracker-header {
@@ -1106,6 +1108,8 @@ main section {
 
 .detail-panel,
 .rsvp-form,
+.archive-card,
+.archive-thanks-panel,
 .tracker-preview,
 .tracker-board,
 .tracker-header {
@@ -1165,6 +1169,89 @@ main section {
   background:
     linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(255, 236, 223, 0.84)),
     var(--card);
+}
+
+.archive-thanks-panel {
+  max-width: 720px;
+  margin: 0 auto;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(239, 255, 250, 0.78)),
+    var(--card);
+}
+
+.archive-thanks-panel p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.archive-hero {
+  padding: 22px 0 46px;
+}
+
+.archive-hero-copy {
+  max-width: 780px;
+  padding-top: clamp(72px, 10vh, 124px);
+}
+
+.archive-hero-copy h1,
+.archive-card h3 {
+  font-family: "Fraunces", serif;
+}
+
+.archive-hero-copy h1 {
+  margin: 0 0 18px;
+  font-size: clamp(3.1rem, 7vw, 6.2rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.archive-hero-copy p:not(.eyebrow) {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.archive-card {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(255, 239, 190, 0.74)),
+    var(--card);
+}
+
+.archive-card:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(228, 255, 248, 0.74)),
+    var(--card);
+}
+
+.archive-card h3 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.archive-card p:not(.card-kicker) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.archive-card .button {
+  justify-self: start;
+  margin-top: 6px;
 }
 
 .rsvp-form label {
@@ -1631,6 +1718,7 @@ code {
   .rsvp-layout,
   .details-grid,
   .photo-grid,
+  .archive-grid,
   .tracker-stats-large {
     grid-template-columns: 1fr;
   }
@@ -2037,6 +2125,8 @@ body.theme3 .paw-trail {
 .hero-card,
 .detail-panel,
 .rsvp-form,
+.archive-card,
+.archive-thanks-panel,
 .tracker-preview,
 .tracker-board,
 .tracker-header,
@@ -2057,6 +2147,8 @@ body.theme3 .tracker-stats > div {
 body.theme3 .hero-card,
 body.theme3 .detail-panel,
 body.theme3 .rsvp-form,
+body.theme3 .archive-card,
+body.theme3 .archive-thanks-panel,
 body.theme3 .tracker-preview,
 body.theme3 .tracker-board,
 body.theme3 .tracker-header,

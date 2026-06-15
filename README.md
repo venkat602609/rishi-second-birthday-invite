@@ -5,6 +5,7 @@ Static invite website designed for GitHub Pages.
 ## What is included
 
 - `index.html`: the public-facing invite page
+- `archive.html`: archived birthday site page links and post-party message
 - `tracker.html`: a simple RSVP tracker dashboard
 - `styles.css`: the visual design
 - `app.js`: RSVP form logic and tracker rendering
