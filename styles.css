@@ -1261,16 +1261,17 @@ main section {
 }
 
 .time-hero::before {
-  content: "R";
+  content: "2026";
   position: absolute;
-  top: 92px;
-  right: 0;
+  top: 112px;
+  right: -6px;
   z-index: -1;
   font-family: "Fraunces", serif;
-  font-size: clamp(12rem, 32vw, 27rem);
+  font-size: clamp(5.8rem, 15vw, 16rem);
   line-height: 0.72;
-  color: color-mix(in srgb, var(--theme-accent) 46%, transparent);
-  opacity: 0.54;
+  color: color-mix(in srgb, var(--theme-accent) 32%, transparent);
+  opacity: 0.46;
+  transform: rotate(3deg);
 }
 
 .time-hero-grid {
@@ -1305,6 +1306,15 @@ main section {
   line-height: 1.04;
 }
 
+.time-hero-copy blockquote::before {
+  content: "";
+  display: block;
+  width: 84px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, var(--theme-secondary), transparent);
+}
+
 .time-hero-copy p:not(.eyebrow),
 .time-capsule-banner p {
   max-width: 58ch;
@@ -1315,16 +1325,33 @@ main section {
 
 .time-capsule-card,
 .time-capsule-banner {
-  border: 1px solid rgba(255, 255, 255, 0.84);
-  border-radius: 34px;
+  border: 1px solid rgba(72, 84, 86, 0.12);
+  border-radius: 28px;
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 207, 86, 0.36), transparent 22%),
-    linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(228, 255, 248, 0.76));
-  box-shadow: 0 28px 86px rgba(84, 96, 28, 0.18);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(255, 250, 238, 0.5)),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(224, 244, 239, 0.78));
+  box-shadow: 0 26px 70px rgba(54, 67, 58, 0.14);
 }
 
 .time-capsule-card {
   padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.time-capsule-card::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  width: 68px;
+  height: 86px;
+  border: 1px solid rgba(58, 75, 72, 0.14);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 245, 224, 0.62)),
+    linear-gradient(90deg, transparent 0 44%, rgba(58, 75, 72, 0.12) 44% 46%, transparent 46%);
+  transform: rotate(8deg);
 }
 
 .time-capsule-card h2 {
@@ -2093,6 +2120,164 @@ body.theme3.invite-page {
     linear-gradient(90deg, rgba(30, 36, 21, 0.035) 1px, transparent 1px),
     linear-gradient(180deg, #f4ffd9 0%, #e8f8c8 48%, #ffe4b8 100%);
   background-size: auto, auto, auto, 46px 46px, auto;
+}
+
+body.time-capsule-page {
+  --theme-bg-a: rgba(136, 193, 181, 0.26);
+  --theme-bg-b: rgba(245, 200, 112, 0.2);
+  --theme-bg-c: rgba(154, 168, 214, 0.16);
+  --theme-page-start: #f8fbf4;
+  --theme-page-mid: #eef6ee;
+  --theme-page-end: #f7efe1;
+  --theme-primary: #3c7c73;
+  --theme-secondary: #8a6f3d;
+  --theme-accent: #d9b765;
+  --theme-aqua: #88c1b5;
+  --theme-blue: #8d9bc9;
+  --theme-pink: #d7a0a7;
+  --theme-card-tint: rgba(232, 243, 238, 0.78);
+  --ink: #26322e;
+  --muted: #65706b;
+  --teal: #3c7c73;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(216, 190, 114, 0.18), transparent 22%),
+    radial-gradient(circle at 86% 20%, rgba(136, 193, 181, 0.24), transparent 19%),
+    radial-gradient(circle at 68% 78%, rgba(141, 155, 201, 0.14), transparent 20%),
+    linear-gradient(90deg, rgba(38, 50, 46, 0.032) 1px, transparent 1px),
+    linear-gradient(180deg, #f8fbf4 0%, #eef6ee 52%, #f7efe1 100%);
+  background-size: auto, auto, auto, 52px 52px, auto;
+}
+
+body.time-capsule-page .soft-glow {
+  filter: blur(24px);
+}
+
+body.time-capsule-page .soft-glow-one {
+  background: #d9b765;
+  opacity: 0.16;
+}
+
+body.time-capsule-page .soft-glow-two {
+  background: #88c1b5;
+  opacity: 0.2;
+}
+
+body.time-capsule-page .soft-glow-three {
+  background: #8d9bc9;
+  opacity: 0.12;
+}
+
+.capsule-orbit,
+.timeline-thread,
+.memory-card-shape {
+  display: none;
+}
+
+body.time-capsule-page .capsule-orbit {
+  position: fixed;
+  right: min(8vw, 90px);
+  top: 18vh;
+  display: block;
+  width: clamp(170px, 22vw, 310px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(60, 124, 115, 0.18);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 28px rgba(255, 255, 255, 0.16),
+    0 22px 70px rgba(54, 67, 58, 0.08);
+}
+
+body.time-capsule-page .capsule-orbit::before,
+body.time-capsule-page .capsule-orbit::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+}
+
+body.time-capsule-page .capsule-orbit::before {
+  inset: 24%;
+  background: rgba(216, 183, 101, 0.24);
+}
+
+body.time-capsule-page .capsule-orbit::after {
+  right: 12%;
+  top: 18%;
+  width: 18%;
+  aspect-ratio: 1;
+  background: #8d9bc9;
+  opacity: 0.5;
+}
+
+body.time-capsule-page .memory-card-shape {
+  position: fixed;
+  display: block;
+  width: 118px;
+  height: 154px;
+  border: 1px solid rgba(38, 50, 46, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.72), rgba(247, 239, 225, 0.64)),
+    linear-gradient(90deg, transparent 0 43%, rgba(60, 124, 115, 0.14) 43% 45%, transparent 45%);
+  box-shadow: 0 24px 60px rgba(54, 67, 58, 0.1);
+}
+
+body.time-capsule-page .memory-card-shape::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 22px;
+  height: 2px;
+  background: rgba(60, 124, 115, 0.18);
+  box-shadow:
+    0 -12px 0 rgba(60, 124, 115, 0.12),
+    0 -24px 0 rgba(60, 124, 115, 0.1);
+}
+
+body.time-capsule-page .memory-card-one {
+  left: 6vw;
+  bottom: 16vh;
+  transform: rotate(-9deg);
+}
+
+body.time-capsule-page .memory-card-two {
+  right: 11vw;
+  bottom: 9vh;
+  width: 92px;
+  height: 122px;
+  opacity: 0.72;
+  transform: rotate(7deg);
+}
+
+body.time-capsule-page .timeline-thread {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  display: block;
+  width: min(760px, 82vw);
+  height: 100vh;
+  border-left: 1px dashed rgba(60, 124, 115, 0.16);
+  transform: translateX(-50%) rotate(12deg);
+  opacity: 0.7;
+}
+
+body.time-capsule-page .timeline-thread::before,
+body.time-capsule-page .timeline-thread::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(60, 124, 115, 0.28);
+}
+
+body.time-capsule-page .timeline-thread::before {
+  top: 26%;
+}
+
+body.time-capsule-page .timeline-thread::after {
+  top: 68%;
 }
 
 .soft-glow {
