@@ -4,8 +4,9 @@ Static invite website designed for GitHub Pages.
 
 ## What is included
 
-- `index.html`: the public-facing invite page
-- `archive.html`: archived birthday site page links and post-party message
+- `index.html`: Rishi's personal website and time-capsule home page
+- `archive.html`: archived page index for past events and milestones
+- `archive-rishi-turns-two.html`: archived second birthday invitation
 - `tracker.html`: a simple RSVP tracker dashboard
 - `styles.css`: the visual design
 - `app.js`: RSVP form logic and tracker rendering

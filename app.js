@@ -325,7 +325,7 @@
 
   function wireScrollReveals() {
     const targets = document.querySelectorAll(
-      ".hero-copy, .hero-card, .archive-hero-copy, .section-heading, .photo-card, .detail-panel, .archive-card, .archive-thanks-panel, .rsvp-form, .tracker-preview"
+      ".hero-copy, .hero-card, .time-hero-copy, .time-capsule-card, .time-capsule-banner, .archive-hero-copy, .section-heading, .photo-card, .detail-panel, .archive-card, .archive-thanks-panel, .rsvp-form, .tracker-preview"
     );
     if (!targets.length || !("IntersectionObserver" in window)) {
       targets.forEach((target) => target.classList.add("is-visible"));

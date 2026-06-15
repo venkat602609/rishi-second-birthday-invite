@@ -2,7 +2,7 @@
   "name": "rishi-second-birthday",
   "private": true,
   "scripts": {
-    "build:cloudflare": "rm -rf dist && mkdir -p dist && cp -R index.html archive.html tracker.html app.js styles.css settings.js assets dist/ && find dist -name .DS_Store -delete",
+    "build:cloudflare": "rm -rf dist && mkdir -p dist && cp -R index.html archive.html archive-rishi-turns-two.html tracker.html app.js styles.css settings.js assets dist/ && find dist -name .DS_Store -delete",
     "start": "python3 -m http.server 8000"
   }
 }
